@@ -7,9 +7,6 @@
         <file>playmove.png</file>
         <file>playmove1.png</file>
         <file>background.jpg</file>
-        <file>../../../mortty.jpg</file>
-        <file>mortty.jpg</file>
-        <file>../../../OIP.jpg</file>
         <file>OIP.jpg</file>
     </qresource>
 </RCC>

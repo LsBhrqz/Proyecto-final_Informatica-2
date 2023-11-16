@@ -113,10 +113,7 @@ release/qrc_Images.cpp: ../Animated-1/Images/Images.qrc \
 		../Animated-1/Images/rickLeft.jpg \
 		../Animated-1/Images/playmove\ -\ Copy.png \
 		../Animated-1/Images/playmove1\ -\ Copy.png \
-		../Animated-1/Images/mortty.jpg \
-		../../mortty.jpg \
 		../Animated-1/Images/OIP.jpg \
-		../../OIP.jpg \
 		../Animated-1/Images/playmove1.png \
 		../Animated-1/Images/rickRight.jpg \
 		../Animated-1/Images/background.jpg \

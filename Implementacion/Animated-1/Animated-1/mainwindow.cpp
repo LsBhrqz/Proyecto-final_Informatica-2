@@ -127,7 +127,7 @@ void MainWindow::createShotAnimation(const QPointF &shootPosition) {
         //QPointF jugadorPos = jugador->pos();
         //QGraphicsEllipseItem *shot = new QGraphicsEllipseItem();
         QPointF jugadorPos = jugador->pos(); // Tomar la posición
-        QGraphicsEllipseItem *shot = new QGraphicsEllipseItem(0, 0, 5, 5);
+        QGraphicsEllipseItem *shot = new QGraphicsEllipseItem(0, 0, 10, 10);
         shot->setPos(jugadorPos); // Se crea y se asigna la pos del jugador
         shot->setBrush(QBrush(Qt::red));
         scene->addItem(shot);
