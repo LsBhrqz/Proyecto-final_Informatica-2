@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Images">
+        <file>rickLeft.jpg</file>
+        <file>rickRight.jpg</file>
+        <file>playmove - Copy.png</file>
+        <file>playmove1 - Copy.png</file>
+        <file>playmove.png</file>
+        <file>playmove1.png</file>
+        <file>background.jpg</file>
+    </qresource>
+</RCC>
