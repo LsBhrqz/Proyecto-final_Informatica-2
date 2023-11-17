@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     // Ajuste del loop del timer
-    bgTimer->start(20);  // ¿Qué pasa si cambio este valor? ¿Cómo afecta el movimiento?
+    bgTimer->start(30);  // ¿Qué pasa si cambio este valor? ¿Cómo afecta el movimiento?
 
 
 
