@@ -65,6 +65,8 @@ int main(int argc, char *argv[])
         x = xIn + velX * tiempoX * dir;
         y = (yIn - (velInY * tiempoY - (0.5 * g * (tiempoY * tiempoY))));
         velY = velInY - g*tiempoY;
+        tiempoX +=0.1;
+        tiempoY +=0.1;
 
         //Si hay una colisión, recalculamos parámetros
 
@@ -102,8 +104,6 @@ int main(int argc, char *argv[])
         qDebug() << velY << velX ;
 
 
-        tiempoX +=0.1;
-        tiempoY +=0.1;
 
 
     });
@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
     mainWidget.show();
 
 
-    timer.start(50);
+    timer.start(15);
 
     return a.exec();
 }
@@ -135,16 +135,17 @@ void updateValues(double &xIn, double &yIn, double &tiempoX, double &tiempoY, do
         tiempoX = 0;
     }
     else{
-        yIn = particle.y();
+        //yIn = particle.y();
         xIn = particle.x();
-        ang = -atan2(velInY, velInX) * 180 / M_PI;
-        velY *=0.5;
+
+        //velY *=0.5;
 
         tiempoY = 0;
         tiempoX = 0;
-        velInY = velInY*0.5;
+        velInY = velIn * sin(ang * (M_PI/180));
         velInX = velInX*0.5;
         velIn = sqrt(pow(velInX,2)+pow(velInY,2)) * 0.5;
+        //ang = -atan2(velInY, velInX) * 180 / M_PI;
     }
 
 
