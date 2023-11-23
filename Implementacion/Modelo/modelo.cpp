@@ -24,7 +24,7 @@ void modelo::setValues(){
 }
 void modelo::jump(){
     coordX = xIn + (velInX * tiempo);
-    coordY = yIn + (velInY * tiempo - (0.5 * gravedad * (tiempo * tiempo)));
+    coordY = yIn - (velInY * tiempo - (0.5 * gravedad * (tiempo * tiempo)));
     velY = velInY - (gravedad*tiempo);
     velX = velInX;
     tiempo += 0.05;

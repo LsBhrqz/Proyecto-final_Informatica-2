@@ -18,10 +18,14 @@ int main(int argc, char *argv[])
     particle.setBrush(Qt::red);
     scene.addItem(&particle);
 
-    modelo pelota(100, 100, 30, 80, false);
+    modelo pelota(300, 200, 30, 50, true);
 
     QTimer timer;
     QObject::connect(&timer, &QTimer::timeout, [&](){
+        //Evaluar si el algoritmo sirve, de lo contrario cambiar la estrucutra
+        //Redimensionar automáticamente
+        //Reevaluar tiros y conservaciones
+        //Tener en cuenta herencias
 
         pelota.jump();
 
