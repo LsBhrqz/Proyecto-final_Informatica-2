@@ -21,8 +21,7 @@ int main(int argc, char *argv[])
 
     QGraphicsScene scene;
     QGraphicsView view(&scene);
-    scene.setSceneRect(0,0,900,700);
-    view.setFixedSize(1000, 800);
+    scene.setSceneRect(0,0,500, 500);
     view.show();
 
     // Crear la partícula y dibujarla
