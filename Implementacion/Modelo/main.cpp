@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 
     QGraphicsScene scene;
     QGraphicsView view(&scene);
-    scene.setSceneRect(0,0,700,600);
+    scene.setSceneRect(0,0,800,650);
     view.show();
 
 
@@ -18,12 +18,16 @@ int main(int argc, char *argv[])
     particle.setBrush(Qt::red);
     scene.addItem(&particle);
 
-    modelo pelota(300, 200, 30, 50, true);
+    double anchoPant = scene.width();
+    double altoPant = scene.height();
+    double anchoObj = particle.boundingRect().width();
+    double altoObj = particle.boundingRect().height();
+
+    modelo pelota(300, 200, 80, 200, true, anchoObj, altoObj, anchoPant, altoPant);
 
     QTimer timer;
     QObject::connect(&timer, &QTimer::timeout, [&](){
         //Evaluar si el algoritmo sirve, de lo contrario cambiar la estrucutra
-        //Redimensionar automáticamente
         //Reevaluar tiros y conservaciones
         //Tener en cuenta herencias
 
@@ -35,6 +39,9 @@ int main(int argc, char *argv[])
 
         if(!(pelota.seMueve())){
             timer.stop();
+        }
+        else{
+            pelota.tiempo += 0.05;
         }
 
     });

@@ -1,6 +1,6 @@
 #include "modelo.h"
 
-modelo::modelo(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _Grav){
+modelo::modelo(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _Grav, double _anchoObj, double _altoObj, double _anchoPant, double _altoPant){
     xIn = _xIn;
     yIn = _yIn;
     angTiro = _angTiro;
@@ -14,6 +14,10 @@ modelo::modelo(double _xIn, double _yIn, double _angTiro, double _velInicial, bo
         gravedad = 0;
     }
     setValues();
+    anchoObj = _anchoObj;
+    altoObj = _altoObj;
+    anchoPant = _anchoPant;
+    altoPant = _altoPant;
 }
 
 void modelo::setValues(){
@@ -27,7 +31,9 @@ void modelo::jump(){
     coordY = yIn - (velInY * tiempo - (0.5 * gravedad * (tiempo * tiempo)));
     velY = velInY - (gravedad*tiempo);
     velX = velInX;
-    tiempo += 0.05;
+
+    qDebug() << "abscisa " << coordX;
+    qDebug() << "ordenada " << coordY;
 }
 
 double modelo::bounce(double velEvent){
@@ -37,9 +43,18 @@ double modelo::bounce(double velEvent){
 
 void modelo::collide(){
     //Colisiones en el eje horizontal
-    if(coordX > 680){
-
+    if(coordX > (anchoPant - anchoObj) || coordX < anchoObj){
         velX = bounce(velX);
+
+        if(coordX > (anchoPant - anchoObj)){
+            xIn = coordX - 1;
+            yIn = coordY - 1;
+        }
+
+        if(coordX < anchoObj){
+            xIn = coordX + 1;
+            yIn = coordY + 1;
+        }
 
         updateValues();
 
@@ -49,26 +64,34 @@ void modelo::collide(){
 
     //Colisiones en el eje vertical
 
-    if(coordY > 580){
-
+    if(coordY > (altoPant - altoObj) || coordY < altoObj){
         velY = bounce(velY);
+
+        if(coordY > (altoPant - altoObj)){
+            yIn = coordY - 1;
+            xIn = coordX - 1;
+        }
+
+        if(coordY < altoObj){
+            yIn = coordY + 1;
+            xIn = coordX + 1;
+        }
 
         updateValues();
 
         qDebug() << "angle " << angTiro;
 
         //Condición para parar el rebote
-        if (qAbs(velY) < 2.5) {
+        if (qAbs(velY) < 2.2) {
             velY = 0;
             movimiento = false;
         }
     }
+
 }
 
 void modelo::updateValues(){
-    tiempo = 0;
-    xIn = coordX - 1;
-    yIn = coordY - 1;
+    tiempo = 0.05;
 
     velInicial = pow(((pow(velX,2) + pow(velY,2))), 0.5);
     angTiro = atan2(velY,velX) * 180 / M_PI;
@@ -78,6 +101,8 @@ void modelo::updateValues(){
 
     velInY = (velInicial * sin(angTiro * (M_PI/180)));
     velInX = (velInicial * cos(angTiro * (M_PI/180)));
+    qDebug() << "abscisa " << coordX;
+    qDebug() << "ordenada " << coordY;
 }
 
 bool modelo::seMueve(){

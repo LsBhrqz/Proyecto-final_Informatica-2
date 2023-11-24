@@ -14,10 +14,10 @@
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
 
-class modelo{
+class modelo : public QObject{
     private:
         bool movimiento = true;
-        double tiempo = 0;
+
         double velInicial;
         double angTiro;
         double velX = 0;
@@ -30,10 +30,14 @@ class modelo{
         double yIn;
         double coordX;
         double coordY;
+        double anchoObj;
+        double altoObj;
+        double anchoPant;
+        double altoPant;
 
     public:
-        modelo(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _Grav);
-
+        modelo(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _Grav, double _anchoObj, double _altoObj, double _anchoPant, double _altoPant);
+        double tiempo = 0.05;
         void setValues();
 
         void collide();
