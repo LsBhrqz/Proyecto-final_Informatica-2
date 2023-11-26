@@ -19,7 +19,7 @@ CXXFLAGS      = -fno-keep-inline-dllexport -g -std=gnu++1z -Wall -Wextra -Wextra
 INCPATH       = -I../RICKandMORTY -I. -IC:/Qt/6.5.2/mingw_64/include -IC:/Qt/6.5.2/mingw_64/include/QtWidgets -IC:/Qt/6.5.2/mingw_64/include/QtGui -IC:/Qt/6.5.2/mingw_64/include/QtCore -Idebug -I. -I/include -IC:/Qt/6.5.2/mingw_64/mkspecs/win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-subsystem,windows -mthreads
-LIBS        =        C:\Qt\6.5.2\mingw_64\lib\libQt6Widgets.a C:\Qt\6.5.2\mingw_64\lib\libQt6Gui.a C:\Qt\6.5.2\mingw_64\lib\libQt6Core.a -lmingw32 C:\Qt\6.5.2\mingw_64\lib\libQt6EntryPoint.a -lshell32  
+LIBS        =        C:\Qt\6.5.2\mingw_64\lib\libQt6Widgets.a C:\Qt\6.5.2\mingw_64\lib\libQt6Gui.a C:\Qt\6.5.2\mingw_64\lib\libQt6Core.a debug\RICKandMORTY_resource_res.o -lmingw32 C:\Qt\6.5.2\mingw_64\lib\libQt6EntryPoint.a -lshell32  
 QMAKE         = C:\Qt\6.5.2\mingw_64\bin\qmake.exe
 DEL_FILE      = del
 CHK_DIR_EXISTS= if not exist
@@ -40,7 +40,7 @@ IDC           = idc
 IDL           = midl
 ZIP           = zip -r -9
 DEF_FILE      = 
-RES_FILE      = 
+RES_FILE      = debug\RICKandMORTY_resource_res.o
 SED           = $(QMAKE) -install sed
 MOVE          = move
 
@@ -70,8 +70,11 @@ DESTDIR_TARGET = debug\RICKandMORTY.exe
 first: all
 all: Makefile.Debug  debug/RICKandMORTY.exe
 
-debug/RICKandMORTY.exe: C:/Qt/6.5.2/mingw_64/lib/libQt6Widgets.a C:/Qt/6.5.2/mingw_64/lib/libQt6Gui.a C:/Qt/6.5.2/mingw_64/lib/libQt6Core.a C:/Qt/6.5.2/mingw_64/lib/libQt6EntryPoint.a ui_mainwindow.h $(OBJECTS) 
+debug/RICKandMORTY.exe: C:/Qt/6.5.2/mingw_64/lib/libQt6Widgets.a C:/Qt/6.5.2/mingw_64/lib/libQt6Gui.a C:/Qt/6.5.2/mingw_64/lib/libQt6Core.a C:/Qt/6.5.2/mingw_64/lib/libQt6EntryPoint.a ui_mainwindow.h $(OBJECTS) debug/RICKandMORTY_resource_res.o
 	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) $(OBJECTS) $(LIBS)
+
+debug/RICKandMORTY_resource_res.o: RICKandMORTY_resource.rc
+	windres -i RICKandMORTY_resource.rc -o debug\RICKandMORTY_resource_res.o --include-dir=. $(DEFINES)
 
 qmake: FORCE
 	@$(QMAKE) -o Makefile.Debug ..\RICKandMORTY\RICKandMORTY.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -83,6 +86,7 @@ dist:
 
 clean: compiler_clean 
 	-$(DEL_FILE) debug\main.o debug\mainwindow.o debug\qrc_img.o debug\moc_mainwindow.o
+	-$(DEL_FILE) debug\RICKandMORTY_resource_res.o
 
 distclean: clean 
 	-$(DEL_FILE) .qmake.stash
@@ -702,9 +706,6 @@ debug/mainwindow.o: ../RICKandMORTY/mainwindow.cpp ../RICKandMORTY/mainwindow.h 
 		C:/Qt/6.5.2/mingw_64/include/QtWidgets/qscrollarea.h \
 		C:/Qt/6.5.2/mingw_64/include/QtWidgets/qabstractscrollarea.h \
 		C:/Qt/6.5.2/mingw_64/include/QtWidgets/qframe.h \
-		C:/Qt/6.5.2/mingw_64/include/QtWidgets/QMenuBar \
-		C:/Qt/6.5.2/mingw_64/include/QtWidgets/qmenubar.h \
-		C:/Qt/6.5.2/mingw_64/include/QtWidgets/qmenu.h \
 		C:/Qt/6.5.2/mingw_64/include/QtWidgets/QStatusBar \
 		C:/Qt/6.5.2/mingw_64/include/QtWidgets/qstatusbar.h \
 		C:/Qt/6.5.2/mingw_64/include/QtWidgets/QVBoxLayout \

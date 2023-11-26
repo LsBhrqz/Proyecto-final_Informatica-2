@@ -11,10 +11,10 @@
         <file>img/Mortyfrente.png</file>
         <file>img/Mortyizquierda.png</file>
         <file>img/Mortyizquierdaavanza.png</file>
-        <file>img/presentacion.png</file>
         <file>img/titulo.png</file>
         <file>img/tuberculosis1.png</file>
         <file>img/tuberculosis2.png</file>
         <file>img/tuberculosis3.png</file>
+        <file>img/presentacion.png</file>
     </qresource>
 </RCC>
