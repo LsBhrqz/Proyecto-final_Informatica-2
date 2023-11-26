@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/fondohepatitisB.png</file>
+        <file>img/fondotuberculosis.jpg</file>
+        <file>img/hepatitisb1.png</file>
+        <file>img/hepatitisb2.png</file>
+        <file>img/hepatitisb3.png</file>
+        <file>img/logo.png</file>
+        <file>img/Mortyderecha.png</file>
+        <file>img/Mortyderechaavanza.png</file>
+        <file>img/Mortyfrente.png</file>
+        <file>img/Mortyizquierda.png</file>
+        <file>img/Mortyizquierdaavanza.png</file>
+        <file>img/presentacion.png</file>
+        <file>img/titulo.png</file>
+        <file>img/tuberculosis1.png</file>
+        <file>img/tuberculosis2.png</file>
+        <file>img/tuberculosis3.png</file>
+    </qresource>
+</RCC>
