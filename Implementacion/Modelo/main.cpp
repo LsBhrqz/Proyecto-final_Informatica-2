@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     double anchoObj = particle.boundingRect().width();
     double altoObj = particle.boundingRect().height();
 
-    modelo pelota(300, 200, 80, 200, true, anchoObj, altoObj, anchoPant, altoPant);
+    modelo pelota(700, 600, 30, 180, true, anchoObj, altoObj, anchoPant, altoPant);
 
     QTimer timer;
     QObject::connect(&timer, &QTimer::timeout, [&](){
@@ -37,18 +37,19 @@ int main(int argc, char *argv[])
 
         particle.setPos(pelota.getcoordX(), pelota.getcoordY());
 
-        if(!(pelota.seMueve())){
+        if(!(pelota.seMueve()) || pelota.tiempoGeneral > 30){
             timer.stop();
         }
         else{
             pelota.tiempo += 0.05;
+            pelota.tiempoGeneral += 0.05;
         }
 
     });
 
     QPushButton pushButton("Change Gravity");
     QObject::connect(&pushButton, &QPushButton::clicked, [&]() {
-
+        pelota.gravedad = 0;
     });
 
     QVBoxLayout layout;

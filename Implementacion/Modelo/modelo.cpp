@@ -1,6 +1,6 @@
 #include "modelo.h"
 
-modelo::modelo(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _Grav, double _anchoObj, double _altoObj, double _anchoPant, double _altoPant){
+  modelo::modelo(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _Grav, double _anchoObj, double _altoObj, double _anchoPant, double _altoPant){
     xIn = _xIn;
     yIn = _yIn;
     angTiro = _angTiro;
@@ -26,6 +26,7 @@ void modelo::setValues(){
     velInY = velInicial * sin(angTiro * (M_PI/180));
     velInX = velInicial * cos(angTiro * (M_PI/180));
 }
+
 void modelo::jump(){
     coordX = xIn + (velInX * tiempo);
     coordY = yIn - (velInY * tiempo - (0.5 * gravedad * (tiempo * tiempo)));
@@ -44,6 +45,7 @@ double modelo::bounce(double velEvent){
 void modelo::collide(){
     //Colisiones en el eje horizontal
     if(coordX > (anchoPant - anchoObj) || coordX < anchoObj){
+
         velX = bounce(velX);
 
         if(coordX > (anchoPant - anchoObj)){
@@ -60,6 +62,7 @@ void modelo::collide(){
 
         qDebug() << "Choque en X";
         qDebug() << "angle " << angTiro;
+
     }
 
     //Colisiones en el eje vertical
@@ -87,7 +90,6 @@ void modelo::collide(){
             movimiento = false;
         }
     }
-
 }
 
 void modelo::updateValues(){

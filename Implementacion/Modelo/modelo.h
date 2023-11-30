@@ -13,6 +13,10 @@
 #include <QObject>
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
+#include <string>
+#include <vector>
+
+using namespace std;
 
 class modelo : public QObject{
     private:
@@ -24,7 +28,7 @@ class modelo : public QObject{
         double velInY;
         double velInX;
         float coefRest;
-        double gravedad;
+        vector <string> caras;
         double xIn;
         double yIn;
         double coordX;
@@ -38,6 +42,8 @@ class modelo : public QObject{
         modelo(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _Grav, double _anchoObj, double _altoObj, double _anchoPant, double _altoPant);
 
         double tiempo = 0.05;
+        double tiempoGeneral = 0;
+        double gravedad;
 
         void setValues();
 

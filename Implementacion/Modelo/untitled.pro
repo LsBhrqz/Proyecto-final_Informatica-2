@@ -12,12 +12,18 @@ SOURCES += \
     arma.cpp \
     main.cpp \
     mainwindow.cpp \
-    modelo.cpp
+    modelo.cpp \
+    p.cpp \
+    personaje.cpp \
+    usuario.cpp
 
 HEADERS += \
     arma.h \
     mainwindow.h \
-    modelo.h
+    modelo.h \
+    p.h \
+    personaje.h \
+    usuario.h
 
 FORMS += \
     mainwindow.ui
