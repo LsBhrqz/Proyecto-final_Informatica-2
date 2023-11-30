@@ -27,7 +27,7 @@ void arma::setValues(){
     velInX = velInicial * cos(angTiro * (M_PI/180));
 }
 
-void arma::choque(){
+void arma::impacto(){
     //Colisiones en el eje horizontal
     if(coordX > (anchoPant - anchoObj) || coordX < anchoObj){
         if(arma.caras[1] = carabomba){
@@ -51,8 +51,8 @@ void arma::choque(){
         else{
             delete arma;
         }
-
     }
+
 
     //Colisiones en el eje vertical
 
@@ -84,4 +84,23 @@ void arma::choque(){
             delete arma;
         }
     }
+
+    //colisiones contra enemigos
+
+
+}
+
+void modelo::updateValues(){
+    tiempo = 0.05;
+
+    velInicial = pow(((pow(velX,2) + pow(velY,2))), 0.5);
+    angTiro = atan2(velY,velX) * 180 / M_PI;
+    if(angTiro < 0){
+        angTiro += 360;
+    }
+
+    velInY = (velInicial * sin(angTiro * (M_PI/180)));
+    velInX = (velInicial * cos(angTiro * (M_PI/180)));
+    qDebug() << "abscisa " << coordX;
+    qDebug() << "ordenada " << coordY;
 }

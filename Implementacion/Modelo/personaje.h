@@ -9,8 +9,9 @@ class personaje : public modelo{
     public:
         personaje(double _xIn, double _yIn, bool _Grav, double _anchoObj, double _altoObj, double _anchoPant, double _altoPant);
         void disparar(arma bola);
-        void caminar(bool move);
+        void generar();
         void morir();
+        void herido(int salud);
 };
 
 

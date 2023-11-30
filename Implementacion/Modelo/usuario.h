@@ -1,9 +1,10 @@
 #ifndef USUARIO_H
 #define USUARIO_H
-#include <personaje.h>
+#include <modelo.h>
 
-class usuario : public personaje{
+class usuario : public modelo{
     private:
+        int saludMorty;
         arma equipada;
     public:
         usuario(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _Grav, double _anchoObj, double _altoObj, double _anchoPant, double _altoPant);
@@ -11,8 +12,6 @@ class usuario : public personaje{
         void dispararMorty();
         void gameOver();
 };
-
-
 
 
 #endif // USUARIO_H

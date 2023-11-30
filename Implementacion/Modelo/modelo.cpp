@@ -1,6 +1,6 @@
 #include "modelo.h"
 
-  modelo::modelo(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _Grav, double _anchoObj, double _altoObj, double _anchoPant, double _altoPant){
+modelo::modelo(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _Grav, double _anchoObj, double _altoObj, double _anchoPant, double _altoPant){
     xIn = _xIn;
     yIn = _yIn;
     angTiro = _angTiro;
