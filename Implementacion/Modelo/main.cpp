@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     double anchoObj = particle.boundingRect().width();
     double altoObj = particle.boundingRect().height();
 
-    modelo pelota(700, 600, 30, 180, true, anchoObj, altoObj, anchoPant, altoPant);
+    modelo pelota(700.0, 600.0, 30.0, 180.0, true, anchoObj, altoObj, anchoPant, altoPant);
 
     QTimer timer;
     QObject::connect(&timer, &QTimer::timeout, [&](){

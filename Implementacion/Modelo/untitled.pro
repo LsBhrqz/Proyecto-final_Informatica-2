@@ -9,21 +9,21 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Morty.cpp \
     arma.cpp \
     main.cpp \
     mainwindow.cpp \
     modelo.cpp \
     p.cpp \
-    personaje.cpp \
-    usuario.cpp
+    personaje.cpp
 
 HEADERS += \
+    Morty.h \
     arma.h \
     mainwindow.h \
     modelo.h \
     p.h \
-    personaje.h \
-    usuario.h
+    personaje.h
 
 FORMS += \
     mainwindow.ui

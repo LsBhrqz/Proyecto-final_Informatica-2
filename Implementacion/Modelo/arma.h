@@ -5,7 +5,9 @@
 class arma : public modelo{
     public:
         arma(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _Grav, double _anchoObj, double _altoObj, double _anchoPant, double _altoPant);
-        void impacto();
+        bool impacto(int tiempoExplosion);
+        bool impactoPared();
+        bool impactoEnemigo();
 };
 
 

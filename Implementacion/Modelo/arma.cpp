@@ -20,17 +20,10 @@ arma::arma(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _
     altoPant = _altoPant;
 }
 
-void arma::setValues(){
-    coordX = xIn;
-    coordY = yIn;
-    velInY = velInicial * sin(angTiro * (M_PI/180));
-    velInX = velInicial * cos(angTiro * (M_PI/180));
-}
-
-void arma::impacto(){
+bool arma::impacto(int tiempoExplosion){
+    while(tiempExplosion >= 0){
     //Colisiones en el eje horizontal
     if(coordX > (anchoPant - anchoObj) || coordX < anchoObj){
-        if(arma.caras[1] = carabomba){
             velX = bounce(velX);
 
             if(coordX > (anchoPant - anchoObj)){
@@ -47,17 +40,12 @@ void arma::impacto(){
 
             qDebug() << "Choque en X";
             qDebug() << "angle " << angTiro;
-        }
-        else{
-            delete arma;
-        }
     }
-
 
     //Colisiones en el eje vertical
 
     if(coordY > (altoPant - altoObj) || coordY < altoObj){
-        if(arma.caras[1] == carabomba){
+
             velY = bounce(velY);
 
             if(coordY > (altoPant - altoObj)){
@@ -80,27 +68,34 @@ void arma::impacto(){
                 movimiento = false;
             }
         }
-        else{
-            delete arma;
-        }
     }
-
-    //colisiones contra enemigos
-
-
+    return false;
 }
 
-void modelo::updateValues(){
-    tiempo = 0.05;
 
-    velInicial = pow(((pow(velX,2) + pow(velY,2))), 0.5);
-    angTiro = atan2(velY,velX) * 180 / M_PI;
-    if(angTiro < 0){
-        angTiro += 360;
+bool arma::impactoPared(){
+    if(coordX > (anchoPant - anchoObj) || coordX < anchoObj){
+        return true;
     }
 
-    velInY = (velInicial * sin(angTiro * (M_PI/180)));
-    velInX = (velInicial * cos(angTiro * (M_PI/180)));
-    qDebug() << "abscisa " << coordX;
-    qDebug() << "ordenada " << coordY;
+    else if(coordY > (altoPant - altoObj) || coordY < altoObj){
+        return true;
+    }
+
+    return false;
 }
+
+bool arma::impactoEnemigo(double coordXenemigo, double coordYenemigo){
+
+    if(coordX >  || coordX < ){
+        return true;
+    }
+
+    else if(coordY > (altoPant - altoObj) || coordY < altoObj){
+        return true;
+    }
+
+    return false;
+}
+
+
