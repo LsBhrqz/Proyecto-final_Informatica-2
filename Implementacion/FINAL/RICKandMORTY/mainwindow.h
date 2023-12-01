@@ -3,7 +3,9 @@
 
 #include <QMainWindow>
 #include <QGraphicsScene>
-
+#include <QGraphicsItem>
+#include <QGraphicsView>
+#include <QPushButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,8 +26,9 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QGraphicsScene *scene;
+    QPushButton *JUGAR, *nivel1, *nivel2;
 
-    QGraphicsScene* scene;
 
 };
 #endif // MAINWINDOW_H
