@@ -1,6 +1,6 @@
 #include "modelo.h"
-/*
-modelo::modelo(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _Grav, double _anchoObj, double _altoObj, double _anchoPant, double _altoPant){
+
+void modelo::constructor(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _Grav, double _anchoObj, double _altoObj, double _anchoPant, double _altoPant){
     xIn = _xIn;
     yIn = _yIn;
     angTiro = _angTiro;
@@ -19,7 +19,7 @@ modelo::modelo(double _xIn, double _yIn, double _angTiro, double _velInicial, bo
     anchoPant = _anchoPant;
     altoPant = _altoPant;
 }
-*/
+
 void modelo::setValues(){
     coordX = xIn;
     coordY = yIn;

@@ -1,5 +1,5 @@
 #include <arma.h>
-
+/*
 arma::arma(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _Grav, double _anchoObj, double _altoObj, double _anchoPant, double _altoPant){
     xIn = _xIn;
     yIn = _yIn;
@@ -13,15 +13,16 @@ arma::arma(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _
         coefRest = 1;
         gravedad = 0;
     }
+
     setValues();
     anchoObj = _anchoObj;
     altoObj = _altoObj;
     anchoPant = _anchoPant;
     altoPant = _altoPant;
 }
-
+*/
 bool arma::impacto(int tiempoExplosion){
-    while(tiempExplosion >= 0){
+    while(tiempoExplosion >= 0){
     //Colisiones en el eje horizontal
     if(coordX > (anchoPant - anchoObj) || coordX < anchoObj){
             velX = bounce(velX);
@@ -68,12 +69,14 @@ bool arma::impacto(int tiempoExplosion){
                 movimiento = false;
             }
         }
+
+    tiempoExplosion -= 0.05;
     }
     return false;
 }
 
 
-bool arma::impactoPared(){
+bool arma::impacto(){
     if(coordX > (anchoPant - anchoObj) || coordX < anchoObj){
         return true;
     }
@@ -85,7 +88,7 @@ bool arma::impactoPared(){
     return false;
 }
 
-bool arma::impactoEnemigo(double coordXenemigo, double coordYenemigo){
+bool arma::impacto(double coordXenemigo, double coordYenemigo){
 
     if(coordX >  || coordX < ){
         return true;

@@ -38,7 +38,7 @@ class modelo : public QObject{
         double anchoPant;
         double altoPant;
 
-        //modelo(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _Grav, double _anchoObj, double _altoObj, double _anchoPant, double _altoPant);
+        void constructor(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _Grav, double _anchoObj, double _altoObj, double _anchoPant, double _altoPant);
 
         double tiempo = 0.05;
         double tiempoGeneral = 0;

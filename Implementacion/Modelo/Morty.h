@@ -8,7 +8,6 @@ class Morty : public modelo{
         int saludMorty;
         arma equipada;
     public:
-        Morty(double _xIn, double _yIn, double _velInicial, bool _Grav, double _anchoObj, double _altoObj, double _anchoPant, double _altoPant);
         void manejarMorty();
         void dispararMorty();
         void gameOver();
