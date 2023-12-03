@@ -1,10 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QGraphicsItem>
-#include <QGraphicsScene>
-#include <QGraphicsView>
 #include <QPushButton>
-#include "NIVEL1.h"
+#include <QKeyEvent>
+#include <QDebug>
 
 int ancho_pantalla= 1280;
 int alto_pantalla=722;
@@ -17,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     nivel1(nullptr),
     nivel2(nullptr)
 {
+    setFocusPolicy(Qt::StrongFocus);
     ui->setupUi(this);
     scene = new QGraphicsScene;
     scene->setSceneRect(0, 0, ancho_pantalla, alto_pantalla);
@@ -65,17 +64,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Conectar la señal clicked() del botón a una función
     connect(nivel2, &QPushButton::clicked, this, &MainWindow::on_Nivel2_Clicked);
+
+    // En el constructor de MainWindow
+
+
+    //connect(this, &MainWindow::teclaPresionadaSignal, this, &MainWindow::moverMorty);
+
 }
 
-MainWindow::~MainWindow()
-{
-    delete scene;
-    scene = nullptr;
-    delete ui;
-    delete JUGAR;
-    delete nivel1;
-    delete nivel2;
-}
 
 
 void MainWindow::on_JUGAR_Clicked()
@@ -93,10 +89,21 @@ void MainWindow::on_Nivel1_Clicked()
     nivel2->hide();
 
     //Llamo a la función que pone a correr el nivel uno con los Qtimers y todo
-    bool continuarj=true;
+   /*
     while(continuarj){
-        continuidadnivel1(continuarj);
-    }
+        continuidadnivel1(continuarj, scene);
+    }*/
+    morty= new Morty();
+    morty->constructor(800.0, 400.0, 0.0, 0.0, true, 83.0, 110.0, 1280.0, 722.0);
+    morty->setPos(morty->getcoordX(), morty->getcoordY());
+    scene->addItem(morty);
+
+    // En tu constructor de MainWindow
+    timerMorty = new QTimer(this);
+
+    timerMorty->start(2000);
+
+
 }
 
 void MainWindow::on_Nivel2_Clicked()
@@ -104,4 +111,41 @@ void MainWindow::on_Nivel2_Clicked()
     scene->setBackgroundBrush(QPixmap(":/img/fondotuberculosis.jpg").scaled(ancho_pantalla, alto_pantalla));
     nivel1->hide();
     nivel2->hide();
+}
+
+
+
+// En el cpp de MainWindow
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+    if (event->key() == Qt::Key_A) {
+        qDebug() << "izquierda";
+        morty->setPos(morty->getcoordX() + 2, morty->getcoordY() + 2);
+        morty->setPixmap(QPixmap(":/img/Mortyizquierda.png"));
+        morty->setPixmap(QPixmap(":/img/Mortyizquierdaavanza.png"));
+        morty->velInX = -0.05;
+        morty->setPixmap(QPixmap(":/img/Mortyizquierda.png"));
+        // morty->collide();
+    } else if (event->key() == Qt::Key_W) {
+        qDebug() << "Arriba";
+        morty->velInY = 0.05;
+    } else if (event->key()== Qt::Key_D) {
+        qDebug() << "Derecha";
+        morty->setPixmap(QPixmap(":/img/Mortyderecha.png"));
+        morty->setPixmap(QPixmap(":/img/Mortyderechaavanza.png"));
+        morty->velInX = 0.05;
+        morty->setPixmap(QPixmap(":/img/Mortyderechaavanza.png"));
+    }
+
+
+}
+MainWindow::~MainWindow()
+{
+    delete scene;
+    scene = nullptr;
+    delete ui;
+    delete JUGAR;
+    delete nivel1;
+    delete nivel2;
+    delete timerMorty;
+    delete morty;
 }

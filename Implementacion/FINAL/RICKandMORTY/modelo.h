@@ -18,9 +18,8 @@ class modelo : public QObject
 {
         Q_OBJECT
 
-private:
+public:
     bool movimiento = true;
-
     double velInicial;
     double angTiro;
     double velX = 0;
@@ -37,8 +36,6 @@ private:
     double altoObj;
     double anchoPant;
     double altoPant;
-
-public:
     void constructor(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _Grav, double _anchoObj, double _altoObj, double _anchoPant, double _altoPant);
     double tiempo = 0.05;
     void setValues();

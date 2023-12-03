@@ -1,11 +1,11 @@
 #include "morty.h"
 
-Morty::Morty(){
+Morty::Morty(QGraphicsItem *im):QGraphicsPixmapItem(im)
+{
+    setPixmap(QPixmap(":/img/Mortyfrente.png"));
+}
+
+void Morty::gameOver(){
 
 }
 
-void Morty::paint(QPainter *painter){
-    QPixmap pixmap;
-    pixmap.load(":/img/Mortyfrente.png");
-    painter->drawPixmap(boundingRect(), pixmap, pixmap.rect());
-}

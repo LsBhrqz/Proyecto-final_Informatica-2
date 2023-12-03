@@ -6,19 +6,20 @@
 #include <QPainter>
 #include "modelo.h"
 
-class Morty : public modelo
+class Morty : public modelo, public QGraphicsPixmapItem
 {
-private:
+public:
+    Morty(QGraphicsItem* im = nullptr);
     int saludMorty;
     arma equipada;
-public:
-    Morty();
-    QRectF boundingRect() const;
     void manejarMorty();
     void dispararMorty();
     void gameOver();
-    void paint(QPainter *painter);
-
+    bool moverI=false;
+    bool moverD= false;
+    bool moverArr= false;
+    bool moverAb= false;
+    void animar();
 };
 
 

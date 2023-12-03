@@ -1,7 +1,9 @@
 #ifndef HEADERNIVEL1_H
 #define HEADERNIVEL1_H
 
-bool continuidadnivel1(bool& continuar);
+#include "QGraphicsScene"
+
+bool continuidadnivel1(bool& continuar, QGraphicsScene *&scene);
 
 
 #endif // HEADERNIVEL1_H
