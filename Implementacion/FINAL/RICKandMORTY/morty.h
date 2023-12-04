@@ -19,7 +19,6 @@ public:
     bool moverD= false;
     bool moverArr= false;
     bool moverAb= false;
-    void animar();
 };
 
 

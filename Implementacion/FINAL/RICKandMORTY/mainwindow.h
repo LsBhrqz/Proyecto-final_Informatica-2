@@ -25,11 +25,16 @@ public:
     QPushButton *JUGAR, *nivel1, *nivel2;
     QTimer *timerMorty;
     void keyPressEvent(QKeyEvent *event);
-private slots:
+    int cont=0;
+    QTimer *tempo;
+    bool permitirmovx=false;
+    bool permitirmovy=false;
 
+private slots:
+    void animar();
     void on_JUGAR_Clicked();
     void on_Nivel1_Clicked();
     void on_Nivel2_Clicked();
-
+    void collideM();
 };
 #endif // MAINWINDOW_H

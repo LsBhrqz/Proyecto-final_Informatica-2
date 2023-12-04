@@ -37,15 +37,22 @@ void modelo::jump(){
     qDebug() << "ordenada " << coordY;
 }
 
-double modelo::bounce(double velEvent){
-    velEvent = -velEvent * coefRest;
+double modelo::bounce(double velEvent, bool action){
+    if(action){
+        velEvent = -velEvent * coefRest;
+
+    }
+    else{
+        velEvent = 0;
+    }
     return velEvent;
 }
 
-void modelo::collide(){
+void modelo::collide(bool action){
     //Colisiones en el eje horizontal
     if(coordX > (anchoPant - anchoObj) || coordX < anchoObj){
-        velX = bounce(velX);
+
+        velX = bounce(velX, action);
 
         if(coordX > (anchoPant - anchoObj)){
             xIn = coordX - 1;
@@ -61,12 +68,13 @@ void modelo::collide(){
 
         qDebug() << "Choque en X";
         qDebug() << "angle " << angTiro;
+
     }
 
     //Colisiones en el eje vertical
 
     if(coordY > (altoPant - altoObj) || coordY < altoObj){
-        velY = bounce(velY);
+        velY = bounce(velY, action);
 
         if(coordY > (altoPant - altoObj)){
             yIn = coordY - 1;
@@ -88,7 +96,6 @@ void modelo::collide(){
             movimiento = false;
         }
     }
-
 }
 
 void modelo::updateValues(){
@@ -119,4 +126,10 @@ double modelo::getcoordX(){
 
 double modelo::getcoordY(){
     return coordY;
+}
+
+double modelo::angAleatorio(){
+    srand(time(NULL));
+    int num = 180 + rand()% (271 - 180);
+    return num;
 }
