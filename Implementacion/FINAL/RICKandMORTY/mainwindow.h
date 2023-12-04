@@ -29,6 +29,7 @@ public:
     QTimer *tempo;
     bool permitirmovx=false;
     bool permitirmovy=false;
+    bool jugando=false;
 
 private slots:
     void animar();

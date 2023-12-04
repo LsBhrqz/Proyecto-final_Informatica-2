@@ -89,11 +89,7 @@ void MainWindow::on_Nivel1_Clicked()
     nivel1->hide();
     nivel2->hide();
 
-    //Llamo a la función que pone a correr el nivel uno con los Qtimers y todo
-   /*
-    while(continuarj){
-        continuidadnivel1(continuarj, scene);
-    }*/
+    jugando=true;
     morty= new Morty();
     morty->constructor(200.00, 560.0, 0.0, 0.0, true, 83.0, 110.0, 1280.0, 722.0);
     morty->setPos(morty->getcoordX(), morty->getcoordY());
@@ -160,51 +156,50 @@ void MainWindow::collideM(){
 
 // En el cpp de MainWindow
 void MainWindow::keyPressEvent(QKeyEvent *event) {
-    permitirmovx=true; permitirmovy=true;
-    collideM();
-    if (event->key() == Qt::Key_A) {
+    if(jugando){
+        permitirmovx=true; permitirmovy=true;
         collideM();
-        if(permitirmovx){
-            morty->velInX=-4;
-            qDebug() << "izquierda";
-            if(cont==0){
-                morty->setPixmap(QPixmap(":/img/Mortyizquierda.png"));
-                cont=1;
-            }else{
-                morty->setPixmap(QPixmap(":/img/Mortyizquierdaavanza.png"));
-                cont=0;
+        if (event->key() == Qt::Key_A) {
+            collideM();
+            if(permitirmovx){
+                morty->velInX=-4;
+                qDebug() << "izquierda";
+                if(cont==0){
+                    morty->setPixmap(QPixmap(":/img/Mortyizquierda.png"));
+                    cont=1;
+                }else{
+                    morty->setPixmap(QPixmap(":/img/Mortyizquierdaavanza.png"));
+                    cont=0;
+                }
+                morty->setPos(morty->getcoordX()-15, morty->getcoordY());
+                morty->coordX-=15;
             }
-            morty->setPos(morty->getcoordX()-15, morty->getcoordY());
-            morty->coordX-=15;
-        }
-    } else if (event->key() == Qt::Key_W)  {
-        collideM();
-        if(permitirmovy){
-            qDebug() << "Arriba-izquierda";
-            morty->velInY=10;
-            tempo= new QTimer(this);
-            connect(tempo, SIGNAL(timeout()), this, SLOT(animar()));
-            tempo->start(10);
-        }
-    } else if (event->key()== Qt::Key_D) {
-        collideM();
-        if(permitirmovx){
-            morty->velInX=+4;
-            qDebug() << "Derecha";
-            if(cont==0){
-                morty->setPixmap(QPixmap(":/img/Mortyderecha.png"));
-                cont=1;
-            }else{
-                morty->setPixmap(QPixmap(":/img/Mortyderechaavanza.png"));
-                cont=0;
+        } else if (event->key() == Qt::Key_W)  {
+            collideM();
+            if(permitirmovy){
+                qDebug() << "Arriba-izquierda";
+                morty->velInY=10;
+                tempo= new QTimer(this);
+                connect(tempo, SIGNAL(timeout()), this, SLOT(animar()));
+                tempo->start(10);
             }
-            morty->setPos(morty->getcoordX()+15, morty->getcoordY());
-            morty->coordX+=15;
+        } else if (event->key()== Qt::Key_D) {
+            collideM();
+            if(permitirmovx){
+                morty->velInX=+4;
+                qDebug() << "Derecha";
+                if(cont==0){
+                    morty->setPixmap(QPixmap(":/img/Mortyderecha.png"));
+                    cont=1;
+                }else{
+                    morty->setPixmap(QPixmap(":/img/Mortyderechaavanza.png"));
+                    cont=0;
+                }
+                morty->setPos(morty->getcoordX()+15, morty->getcoordY());
+                morty->coordX+=15;
+            }
         }
-
     }
-
-
 }
 
 
