@@ -2,9 +2,6 @@
 #define MORTY_H
 
 #include "arma.h"
-#include <QGraphicsItem>
-#include <QPainter>
-#include "modelo.h"
 
 class Morty : public modelo, public QGraphicsPixmapItem
 {
@@ -19,6 +16,7 @@ public:
     bool moverD= false;
     bool moverArr= false;
     bool moverAb= false;
+    int contadorposicionmorty=0;
 };
 
 

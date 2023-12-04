@@ -13,13 +13,15 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     modelo.cpp \
-    morty.cpp
+    morty.cpp \
+    personaje.cpp
 
 HEADERS += \
     arma.h \
     mainwindow.h \
     modelo.h \
-    morty.h
+    morty.h \
+    personaje.h
 
 FORMS += \
     mainwindow.ui

@@ -1,9 +1,4 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include <QPushButton>
-#include <QKeyEvent>
-#include <QDebug>
-#include <QTime>
 
 int ancho_pantalla= 1280;
 int alto_pantalla=722;
@@ -14,10 +9,12 @@ MainWindow::MainWindow(QWidget *parent)
     scene(new QGraphicsScene),
     JUGAR(nullptr),
     nivel1(nullptr),
-    nivel2(nullptr)
+    nivel2(nullptr),
+    teclasostenida(false)
 {
    // setFocusPolicy(Qt::StrongFocus);
     ui->setupUi(this);
+
     scene = new QGraphicsScene;
     scene->setSceneRect(0, 0, ancho_pantalla, alto_pantalla);
     setFixedSize(ancho_pantalla+20, alto_pantalla+20);
@@ -66,13 +63,10 @@ MainWindow::MainWindow(QWidget *parent)
     // Conectar la señal clicked() del botón a una función
     connect(nivel2, &QPushButton::clicked, this, &MainWindow::on_Nivel2_Clicked);
 
-    // En el constructor de MainWindow
-
-
-    //connect(this, &MainWindow::teclaPresionadaSignal, this, &MainWindow::moverMorty);
+    tempo = new QTimer(this);
+    connect(tempo, SIGNAL(timeout()), this, SLOT(animar()));
 
 }
-
 
 
 void MainWindow::on_JUGAR_Clicked()
@@ -90,13 +84,33 @@ void MainWindow::on_Nivel1_Clicked()
     nivel2->hide();
 
     jugando=true;
+
     morty= new Morty();
+
     morty->constructor(200.00, 560.0, 0.0, 0.0, true, 83.0, 110.0, 1280.0, 722.0);
+
     morty->setPos(morty->getcoordX(), morty->getcoordY());
+
     scene->addItem(morty);
+/*
+    widgetContenedor = new QWidget(this);
+    morty->barraVida = new QProgressBar(widgetContenedor);
+    morty->barraVida->setRange(0, 100);
+    morty->barraVida->setValue(100);
 
-    // En tu constructor de MainWindow
+    // Agrega el widget a la escena
+    ui->graphicsView->scene()->addWidget(widgetContenedor);
 
+    // Configura la posición y el tamaño del widget
+    widgetContenedor->setGeometry(10, 10, 200, 30);
+
+*/
+
+    hepatitisB = new personaje();
+    hepatitisB->constructor(775.0, 380.0, 0.0, 0.0, false, 405.0, 350.0, 1280.0, 722.0);
+    hepatitisB->setPixmap(QPixmap(":/img/hepatitisb1.png"));
+    hepatitisB->setPos(hepatitisB->xIn, hepatitisB->yIn);
+    scene->addItem(hepatitisB);
 }
 
 void MainWindow::on_Nivel2_Clicked()
@@ -137,14 +151,13 @@ void MainWindow::collideM(){
         if(morty->coordY > 560){
             //Abajo
             morty->coordY=560;
+            morty->velY=0;
             morty->tiempo=0;
             tempo->stop();
         }else{
             //Arriba
             morty->coordY=0;
         }
-        morty->velX=0;
-        morty->velY= morty->bounce(morty->velY, false);
         permitirmovy= false;
 
     }else{
@@ -160,9 +173,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
         permitirmovx=true; permitirmovy=true;
         collideM();
         if (event->key() == Qt::Key_A) {
-            collideM();
+            //collideM();
             if(permitirmovx){
-                morty->velInX=-4;
+                morty->velInX=-2;
                 qDebug() << "izquierda";
                 if(cont==0){
                     morty->setPixmap(QPixmap(":/img/Mortyizquierda.png"));
@@ -171,22 +184,26 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                     morty->setPixmap(QPixmap(":/img/Mortyizquierdaavanza.png"));
                     cont=0;
                 }
-                morty->setPos(morty->getcoordX()-15, morty->getcoordY());
-                morty->coordX-=15;
+                morty->setPos(morty->getcoordX()-20, morty->getcoordY());
+                morty->coordX-=20;
             }
-        } else if (event->key() == Qt::Key_W)  {
-            collideM();
+        } if (event->key() == Qt::Key_W)  {
+
             if(permitirmovy){
                 qDebug() << "Arriba-izquierda";
+                qDebug() << morty->velX;
+                qDebug() << morty->velY;
                 morty->velInY=10;
-                tempo= new QTimer(this);
-                connect(tempo, SIGNAL(timeout()), this, SLOT(animar()));
+                //tempo= new QTimer(this);
+
                 tempo->start(10);
             }
-        } else if (event->key()== Qt::Key_D) {
-            collideM();
+
+
+        } if (event->key()== Qt::Key_D) {
+            //collideM();
             if(permitirmovx){
-                morty->velInX=+4;
+                morty->velInX=2;
                 qDebug() << "Derecha";
                 if(cont==0){
                     morty->setPixmap(QPixmap(":/img/Mortyderecha.png"));
@@ -195,13 +212,25 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
                     morty->setPixmap(QPixmap(":/img/Mortyderechaavanza.png"));
                     cont=0;
                 }
-                morty->setPos(morty->getcoordX()+15, morty->getcoordY());
-                morty->coordX+=15;
+                morty->setPos(morty->getcoordX()+20, morty->getcoordY());
+                morty->coordX+=20;
             }
         }
     }
 }
 
+void MainWindow::keyReleaseEvent(QKeyEvent *event){
+    if(jugando){
+        if (event->key() == Qt::Key_A){
+            morty->velX+=3;
+
+        }else if (event->key() == Qt::Key_W){
+            teclasostenida=false;
+        }else if (event->key() == Qt::Key_D){
+            morty->velX-=3;
+        }
+    }
+}
 
 MainWindow::~MainWindow()
 {
@@ -213,5 +242,9 @@ MainWindow::~MainWindow()
     delete nivel2;
     delete timerMorty;
     delete morty;
+    delete tempo;
+    //delete morty->barraVida;
+    delete hepatitisB;
+    delete widgetContenedor;
 }
 

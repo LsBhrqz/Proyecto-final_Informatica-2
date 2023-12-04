@@ -10,19 +10,19 @@
 #include <QDebug>
 #include <QPushButton>
 #include <QVBoxLayout>
-#include <QObject>
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
 #include <string>
 #include <vector>
 #include <time.h>
 #include <ctime>
-
+#include <QProgressBar>
 
 using namespace std;
 
 class modelo : public QObject{
 public:
+    //QProgressBar *barraVida;
     bool movimiento = true;
     double velInicial;
     double angTiro;

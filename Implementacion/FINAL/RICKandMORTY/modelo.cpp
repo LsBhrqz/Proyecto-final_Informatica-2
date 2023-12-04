@@ -18,6 +18,10 @@ void modelo::constructor(double _xIn, double _yIn, double _angTiro, double _velI
     altoObj = _altoObj;
     anchoPant = _anchoPant;
     altoPant = _altoPant;
+
+    //barraVida= nullptr;
+    //barraVida->setRange(0,100);
+    //barraVida->setValue(100);
 }
 
 void modelo::setValues(){
