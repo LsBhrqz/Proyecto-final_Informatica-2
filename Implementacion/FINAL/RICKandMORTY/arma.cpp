@@ -67,10 +67,3 @@ bool arma::impacto(){
 
     return false;
 }
-
-bool arma::impacto(double coordXenemigo, double coordYenemigo, double anchoEnemigo, double altoEnemigo){
-
-    //colisión entre rectángulos
-
-    return false;
-}

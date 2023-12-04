@@ -150,7 +150,7 @@ void MainWindow::collideM(){
     if(morty->coordY > 560 || morty->coordY < 0){
         if(morty->coordY > 560){
             //Abajo
-            morty->coordY=560;
+            morty->coordY-=10;
             morty->velY=0;
             morty->tiempo=0;
             tempo->stop();
@@ -174,27 +174,43 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
         collideM();
         if (event->key() == Qt::Key_A) {
             //collideM();
+
             if(permitirmovx){
-                morty->velInX=-2;
-                qDebug() << "izquierda";
+
+                morty->contadorposicionmorty=-1;
+
                 if(cont==0){
                     morty->setPixmap(QPixmap(":/img/Mortyizquierda.png"));
+
                     cont=1;
                 }else{
                     morty->setPixmap(QPixmap(":/img/Mortyizquierdaavanza.png"));
+
                     cont=0;
                 }
+                morty->velInX=-2;
+
                 morty->setPos(morty->getcoordX()-20, morty->getcoordY());
                 morty->coordX-=20;
             }
         } if (event->key() == Qt::Key_W)  {
 
             if(permitirmovy){
-                qDebug() << "Arriba-izquierda";
+
+                if(morty->contadorposicionmorty==-1){
+                    morty->setPixmap(QPixmap(":/img/Mortyizquierdaavanza.png"));
+                    morty->velInX=-3;
+                }else if(morty->contadorposicionmorty==0){
+                    morty->setPixmap(QPixmap(":/img/Mortyfrente.png"));
+                    morty->velInX=0;
+                }else{
+                    morty->setPixmap(QPixmap(":/img/Mortyderechaavanza.png"));
+                    morty->velInX=3;
+                }
+
                 qDebug() << morty->velX;
                 qDebug() << morty->velY;
                 morty->velInY=10;
-                //tempo= new QTimer(this);
 
                 tempo->start(10);
             }
@@ -203,18 +219,23 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
         } if (event->key()== Qt::Key_D) {
             //collideM();
             if(permitirmovx){
-                morty->velInX=2;
+                morty->contadorposicionmorty=1;
                 qDebug() << "Derecha";
                 if(cont==0){
                     morty->setPixmap(QPixmap(":/img/Mortyderecha.png"));
                     cont=1;
                 }else{
                     morty->setPixmap(QPixmap(":/img/Mortyderechaavanza.png"));
+
                     cont=0;
                 }
+                morty->velInX=2;
                 morty->setPos(morty->getcoordX()+20, morty->getcoordY());
                 morty->coordX+=20;
             }
+        }if(event->key()== Qt::Key_S){
+            morty->setPixmap(QPixmap(":/img/Mortyfrente.png"));
+            morty->contadorposicionmorty=0;
         }
     }
 }
@@ -222,12 +243,16 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 void MainWindow::keyReleaseEvent(QKeyEvent *event){
     if(jugando){
         if (event->key() == Qt::Key_A){
-            morty->velX+=3;
+            morty->setPixmap(QPixmap(":/img/Mortyizquierda.png"));
+            morty->velX=0;
 
         }else if (event->key() == Qt::Key_W){
-            teclasostenida=false;
+
+
         }else if (event->key() == Qt::Key_D){
-            morty->velX-=3;
+            morty->velX=0;
+
+            morty->setPixmap(QPixmap(":/img/Mortyderecha.png"));
         }
     }
 }
