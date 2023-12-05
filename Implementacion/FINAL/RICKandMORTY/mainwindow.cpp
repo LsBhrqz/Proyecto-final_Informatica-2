@@ -62,6 +62,11 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
+void MainWindow:: movimiento_liberar(){
+
+}
+
+
 
 void MainWindow::disparar(arma *bola){
 

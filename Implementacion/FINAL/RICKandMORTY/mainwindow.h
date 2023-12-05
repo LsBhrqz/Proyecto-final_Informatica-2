@@ -50,5 +50,6 @@ private slots:
     void on_Nivel1_Clicked();
     void on_Nivel2_Clicked();
     void collideM();
+    void movimiento_liberar();
 };
 #endif // MAINWINDOW_H
