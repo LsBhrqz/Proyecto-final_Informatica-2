@@ -19,5 +19,6 @@
         <file>img/fondoniveles.jpg</file>
         <file>img/nivel1.png</file>
         <file>img/nivel2.jpg</file>
+        <file>img/laser.png</file>
     </qresource>
 </RCC>

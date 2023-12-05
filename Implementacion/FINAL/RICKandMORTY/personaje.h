@@ -3,14 +3,18 @@
 
 #include <arma.h>
 
-class personaje : public modelo, public QGraphicsPixmapItem{
+class personaje : public modelo{
 private:
-    int salud=100;
+    int salud;
+
 public:
     personaje();
+    int cara;
     int getSalud();
     void morir();
     void herido();
+    void cambiarCara();
+
 };
 
 #endif // PERSONAJE_H

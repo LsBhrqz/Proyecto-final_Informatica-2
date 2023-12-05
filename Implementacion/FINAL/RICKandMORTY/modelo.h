@@ -20,7 +20,7 @@
 
 using namespace std;
 
-class modelo : public QObject{
+class modelo : public QObject, public QGraphicsPixmapItem{
 public:
     //QProgressBar *barraVida;
     bool movimiento = true;

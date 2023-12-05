@@ -56,14 +56,29 @@ bool arma::impacto(int tiempoExplosion){
 }
 
 
-bool arma::impacto(){
-    if(coordX > (anchoPant - anchoObj) || coordX < anchoObj){
-        return true;
+void arma::impacto(){
+    if(coordX > (anchoPant - anchoObj) || coordX < 0){
+        movimiento = true;
+        coordX -= anchoObj;
     }
+    else if(coordY > (altoPant - altoObj) || coordY < 0){
+        movimiento = true;
+        coordY -= altoObj;
+    }
+    else{
+        movimiento = false;
+    }
+}
 
-    else if(coordY > (altoPant - altoObj) || coordY < altoObj){
-        return true;
-    }
+bool arma::impacto(double coordXenemigo, double coordYenemigo, double anchoEnemigo, double altoEnemigo){
+
+    //colisión entre rectángulos
 
     return false;
+}
+
+void arma::ubicarMorty(double coordXmorty, double coordYmorty, double coordInx, double coordIny){
+    coordXmorty = coordXmorty - coordInx ;
+    coordYmorty = coordIny - coordYmorty;
+    angTiro = atan2(coordYmorty,coordXmorty) * 180 / M_PI;
 }

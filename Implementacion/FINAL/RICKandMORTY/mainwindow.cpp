@@ -9,8 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     scene(new QGraphicsScene),
     JUGAR(nullptr),
     nivel1(nullptr),
-    nivel2(nullptr),
-    teclasostenida(false)
+    nivel2(nullptr)
 {
    // setFocusPolicy(Qt::StrongFocus);
     ui->setupUi(this);
@@ -30,12 +29,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     JUGAR = new QPushButton(QIcon(":/img/logo.png"), " JUGAR", ui->centralwidget);
 
-    // Establecer la posición y el tamaño del botón en el widget
     JUGAR->setGeometry(1055, 645, 150, 50);
 
     JUGAR->setStyleSheet("QPushButton { background-color: red; border: 2px solid darkred; border-radius: 5px; padding: 5px; color: white; font-size: 16px; } QPushButton:hover { background-color: darkred; }");
 
-    // Conectar la señal clicked() del botón a una función
     connect(JUGAR, &QPushButton::clicked, this, &MainWindow::on_JUGAR_Clicked);
 
 
@@ -43,19 +40,16 @@ MainWindow::MainWindow(QWidget *parent)
     nivel1->setObjectName("nivel1");
     nivel1->hide();
 
-    // Establecer la posición y el tamaño del botón en el widget
     nivel1->setGeometry(100, 100, 350, 194);
 
     nivel1->setStyleSheet("QPushButton { background-image: url(:/img/nivel1.png); background-color: red; border: 2px solid darkred; border-radius: 5px; padding: 5px; color: white; font-size: 40px; } QPushButton:hover { background-color: darkred; }");
 
-    // Conectar la señal clicked() del botón a una función
     connect(nivel1, &QPushButton::clicked, this, &MainWindow::on_Nivel1_Clicked);
 
     nivel2 = new QPushButton("NIVEL 2", ui->centralwidget);
     nivel2->setObjectName("nivel2");
     nivel2->hide();
 
-    // Establecer la posición y el tamaño del botón en el widget
     nivel2->setGeometry(900, 100, 350, 194);
 
     nivel2->setStyleSheet("QPushButton { background-image: url(:/img/nivel2.jpg); background-color: blue; border: 2px solid darkblue; border-radius: 5px; padding: 5px; color: white; font-size: 40px; } QPushButton:hover { background-color: darkblue; }");
@@ -68,6 +62,51 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
+
+void MainWindow::disparar(arma *bola){
+
+    tiempoTiro = new QTimer(this);
+    connect(tiempoTiro, &QTimer::timeout, [=](){
+
+        bola->jump();
+        bola->impacto();
+
+        if(bola->movimiento){
+
+            tiempoTiro->stop();
+            delete tiempoTiro;
+            particle->hide();
+            delete bola;
+
+        }
+        else{
+            particle->setPos(bola->coordX, bola->coordY);
+            bola->tiempo +=0.5;
+        }
+    });
+
+    tiempoTiro->start(10);
+
+}
+
+void MainWindow::dispararlaser(arma *laser){
+    tiempoTiro = new QTimer(this);
+    connect(tiempoTiro, &QTimer::timeout, [=](){
+        laser->jump();
+        laser->impacto();
+        if(laser->movimiento){
+            tiempoTiro->stop();
+            delete tiempoTiro;
+            laser->hide();
+            delete laser;
+        }
+        else{
+            laser->setPos(laser->coordX, laser->coordY);
+            laser->tiempo +=0.5;
+        }
+    });
+    tiempoTiro->start(10);
+}
 
 void MainWindow::on_JUGAR_Clicked()
 {
@@ -107,10 +146,38 @@ void MainWindow::on_Nivel1_Clicked()
 */
 
     hepatitisB = new personaje();
-    hepatitisB->constructor(775.0, 380.0, 0.0, 0.0, false, 405.0, 350.0, 1280.0, 722.0);
-    hepatitisB->setPixmap(QPixmap(":/img/hepatitisb1.png"));
+    hepatitisB->constructor(775.0, 400.0, 0.0, 0.0, false, 405.0, 350.0, 1280.0, 722.0);
     hepatitisB->setPos(hepatitisB->xIn, hepatitisB->yIn);
     scene->addItem(hepatitisB);
+
+
+    QTimer * cronometro = new QTimer(this);
+    connect(cronometro, &QTimer::timeout, [=](){
+        if(hepatitisB->cara == 0){
+            hepatitisB->setPixmap(QPixmap(":/img/hepatitisb1.png"));
+        }else if (hepatitisB->cara == 1){
+            hepatitisB->setPixmap(QPixmap(":/img/hepatitisb2.png"));
+        }else{
+            hepatitisB->setPixmap(QPixmap(":/img/hepatitisb3.png"));
+            arma* bola = new arma;
+            bola->ubicarMorty(300,700, 890, 460);//aquí va el morty->posiciones en equiz y lle, en los dos primeros parámetros
+            bola->constructor(890, 460, bola->angTiro, 20, false, 30, 30, 1280, 722);
+
+            yoeralabola();
+            disparar(bola);
+        }
+        hepatitisB->cambiarCara();
+    });
+    cronometro->start(500);
+}
+
+void MainWindow::yoeralabola(){
+    particle = new QGraphicsEllipseItem(0, 0, 30, 30);
+    particle->setBrush(Qt::yellow);
+    particle->setPos(750,400);
+    scene->addItem(particle);
+    particle->show();
+
 }
 
 void MainWindow::on_Nivel2_Clicked()
@@ -236,6 +303,16 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
         }if(event->key()== Qt::Key_S){
             morty->setPixmap(QPixmap(":/img/Mortyfrente.png"));
             morty->contadorposicionmorty=0;
+
+        }if(event->key()== Qt::Key_Space){
+            arma* laser= new arma();
+            //laser->ubicarMorty(300,700, 890, 460);//aquí va el morty->posiciones en equiz y lle, en los dos primeros parámetros
+            laser->setPixmap(QPixmap(":/img/laser.png"));
+            laser->constructor(morty->coordX+20, morty->coordY+10, 0, 20, false, 67, 10, 1280, 722);
+            laser->setPos(morty->coordX+80, morty->coordY+20);
+            scene->addItem(laser);
+            dispararlaser(laser);
+
         }
     }
 }
@@ -271,5 +348,8 @@ MainWindow::~MainWindow()
     //delete morty->barraVida;
     delete hepatitisB;
     delete widgetContenedor;
+    delete tiempoTiro;
+    delete particle;
+
 }
 

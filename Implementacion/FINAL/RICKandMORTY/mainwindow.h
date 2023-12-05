@@ -10,6 +10,7 @@
 #include <QTime>
 #include "personaje.h"
 #include "arma.h"
+#include <vector>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -36,7 +37,12 @@ public:
     bool permitirmovy=false;
     bool jugando=false;
     personaje* hepatitisB;
-    bool teclasostenida;
+    QTimer *tiempoTiro;
+    QGraphicsEllipseItem *particle;
+    void disparar(arma* bola);
+    void yoeralabola();
+    void dispararlaser(arma *laser);
+
 
 private slots:
     void animar();

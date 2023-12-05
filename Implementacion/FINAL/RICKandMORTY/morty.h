@@ -3,10 +3,10 @@
 
 #include "arma.h"
 
-class Morty : public modelo, public QGraphicsPixmapItem
+class Morty : public modelo
 {
 public:
-    Morty(QGraphicsItem* im = nullptr);
+    Morty();
     int saludMorty;
     arma equipada;
     void manejarMorty();
