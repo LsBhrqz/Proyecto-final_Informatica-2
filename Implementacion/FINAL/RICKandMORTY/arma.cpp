@@ -82,3 +82,8 @@ void arma::ubicarMorty(double coordXmorty, double coordYmorty, double coordInx, 
     coordYmorty = coordIny - coordYmorty;
     angTiro = atan2(coordYmorty,coordXmorty) * 180 / M_PI;
 }
+
+arma::~arma(){
+    delete propio;
+
+}

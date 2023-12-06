@@ -371,8 +371,6 @@ release/moc_mainwindow.cpp: ../RICKandMORTY/mainwindow.h \
 		C:/Qt/6.5.2/mingw_64/include/QtWidgets/QProgressBar \
 		C:/Qt/6.5.2/mingw_64/include/QtWidgets/qprogressbar.h \
 		ui_mainwindow.h \
-		C:/Qt/6.5.2/mingw_64/include/QtCore/QVariant \
-		C:/Qt/6.5.2/mingw_64/include/QtWidgets/QWidget \
 		C:/Qt/6.5.2/mingw_64/include/QtCore/QTime \
 		C:/Qt/6.5.2/mingw_64/include/QtCore/qdatetime.h \
 		C:/Qt/6.5.2/mingw_64/include/QtCore/qcalendar.h \
@@ -831,8 +829,6 @@ release/main.o: ../RICKandMORTY/main.cpp ../RICKandMORTY/mainwindow.h \
 		C:/Qt/6.5.2/mingw_64/include/QtWidgets/QProgressBar \
 		C:/Qt/6.5.2/mingw_64/include/QtWidgets/qprogressbar.h \
 		ui_mainwindow.h \
-		C:/Qt/6.5.2/mingw_64/include/QtCore/QVariant \
-		C:/Qt/6.5.2/mingw_64/include/QtWidgets/QWidget \
 		C:/Qt/6.5.2/mingw_64/include/QtCore/QTime \
 		C:/Qt/6.5.2/mingw_64/include/QtCore/qdatetime.h \
 		C:/Qt/6.5.2/mingw_64/include/QtCore/qcalendar.h \
@@ -1055,8 +1051,6 @@ release/mainwindow.o: ../RICKandMORTY/mainwindow.cpp ../RICKandMORTY/mainwindow.
 		C:/Qt/6.5.2/mingw_64/include/QtWidgets/QProgressBar \
 		C:/Qt/6.5.2/mingw_64/include/QtWidgets/qprogressbar.h \
 		ui_mainwindow.h \
-		C:/Qt/6.5.2/mingw_64/include/QtCore/QVariant \
-		C:/Qt/6.5.2/mingw_64/include/QtWidgets/QWidget \
 		C:/Qt/6.5.2/mingw_64/include/QtCore/QTime \
 		C:/Qt/6.5.2/mingw_64/include/QtCore/qdatetime.h \
 		C:/Qt/6.5.2/mingw_64/include/QtCore/qcalendar.h \

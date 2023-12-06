@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     nivel1(nullptr),
     nivel2(nullptr)
 {
-   // setFocusPolicy(Qt::StrongFocus);
+    // setFocusPolicy(Qt::StrongFocus);
     ui->setupUi(this);
 
     scene = new QGraphicsScene;
@@ -62,11 +62,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
-void MainWindow:: movimiento_liberar(){
-
-}
-
-
 
 void MainWindow::disparar(arma *bola){
 
@@ -74,14 +69,25 @@ void MainWindow::disparar(arma *bola){
     connect(tiempoTiro, &QTimer::timeout, [=](){
 
         bola->jump();
+        morty->setPos(morty->coordX, morty->coordY);
         bola->impacto();
+
+        bola->colisionEnemigo(bola->coordX, bola->coordY, bola->anchoObj, bola->altoObj, morty->coordX, morty->coordY, morty->anchoObj, morty->altoObj);
+        if(bola->colEnemigo){
+            morty->hide();
+
+            hepatitisB->hide();
+            //tiempoTiro->stop();
+            particle->hide();
+        }
 
         if(bola->movimiento){
 
             tiempoTiro->stop();
-            delete tiempoTiro;
+            //delete tiempoTiro;
             particle->hide();
-            delete bola;
+            //delete bola;
+
 
         }
         else{
@@ -94,23 +100,28 @@ void MainWindow::disparar(arma *bola){
 
 }
 
-void MainWindow::dispararlaser(arma *laser){
-    tiempoTiro = new QTimer(this);
-    connect(tiempoTiro, &QTimer::timeout, [=](){
+void MainWindow::dispararlaser(arma *laser, QTimer* propio){
+
+    propio = new QTimer(this);
+    connect(propio, &QTimer::timeout, [=](){
         laser->jump();
         laser->impacto();
         if(laser->movimiento){
-            tiempoTiro->stop();
-            delete tiempoTiro;
+            propio->stop();
+            //delete tiempoTiro;
             laser->hide();
-            delete laser;
+            //delete laser;
         }
         else{
             laser->setPos(laser->coordX, laser->coordY);
             laser->tiempo +=0.5;
+            laser->colisionEnemigo(laser->coordX, laser->coordY, laser->anchoObj, laser->altoObj, hepatitisB->coordX, hepatitisB->coordY, hepatitisB->anchoObj, hepatitisB->altoObj );
+            if(laser->colEnemigo){
+                hepatitisB->hide();
+            }
         }
     });
-    tiempoTiro->start(10);
+    propio->start(10);
 }
 
 void MainWindow::on_JUGAR_Clicked()
@@ -136,7 +147,7 @@ void MainWindow::on_Nivel1_Clicked()
     morty->setPos(morty->getcoordX(), morty->getcoordY());
 
     scene->addItem(morty);
-/*
+    /*
     widgetContenedor = new QWidget(this);
     morty->barraVida = new QProgressBar(widgetContenedor);
     morty->barraVida->setRange(0, 100);
@@ -165,11 +176,17 @@ void MainWindow::on_Nivel1_Clicked()
         }else{
             hepatitisB->setPixmap(QPixmap(":/img/hepatitisb3.png"));
             arma* bola = new arma;
-            bola->ubicarMorty(300,700, 890, 460);//aquí va el morty->posiciones en equiz y lle, en los dos primeros parámetros
-            bola->constructor(890, 460, bola->angTiro, 20, false, 30, 30, 1280, 722);
+            bola->ubicarMorty(morty->coordX,morty->coordY+40, 890, 460);//aquí va el morty->posiciones en equiz y lle, en los dos primeros parámetros
+            bola->constructor(890, 460, bola->angTiro, 5, false, 30, 30, 1280, 722);
 
             yoeralabola();
             disparar(bola);
+
+            if(bola->colEnemigo){
+                cronometro->stop();
+            }
+
+
         }
         hepatitisB->cambiarCara();
     });
@@ -190,6 +207,60 @@ void MainWindow::on_Nivel2_Clicked()
     scene->setBackgroundBrush(QPixmap(":/img/fondotuberculosis.jpg").scaled(ancho_pantalla, alto_pantalla));
     nivel1->hide();
     nivel2->hide();
+
+    jugando=true;
+
+    morty= new Morty();
+
+    morty->constructor(200.00, 560.0, 0.0, 0.0, true, 83.0, 110.0, 1280.0, 722.0);
+
+    morty->setPos(morty->getcoordX(), morty->getcoordY());
+
+    scene->addItem(morty);
+    /*
+    widgetContenedor = new QWidget(this);
+    morty->barraVida = new QProgressBar(widgetContenedor);
+    morty->barraVida->setRange(0, 100);
+    morty->barraVida->setValue(100);
+
+    // Agrega el widget a la escena
+    ui->graphicsView->scene()->addWidget(widgetContenedor);
+
+    // Configura la posición y el tamaño del widget
+    widgetContenedor->setGeometry(10, 10, 200, 30);
+
+*/
+
+    personaje *tuberculosis = new personaje();
+    tuberculosis->angAleatorio();
+    tuberculosis->constructor(775.0, 400.0, tuberculosis->angTiro, 80.0, false, 405.0, 350.0, 1280.0, 722.0);
+    tuberculosis->setPos(tuberculosis->xIn, tuberculosis->yIn);
+    scene->addItem(tuberculosis);
+
+    bool boot = true;
+    QTimer *cronometro = new QTimer(this);
+    connect(cronometro, &QTimer::timeout, [=](){
+        if(tuberculosis->cara == 0){
+            tuberculosis->setPixmap(QPixmap(":/img/tuberculosis1.png"));
+        }else if (tuberculosis->cara == 1){
+            tuberculosis->setPixmap(QPixmap(":/img/tuberculosis2.png"));
+        }else{
+            tuberculosis->setPixmap(QPixmap(":/img/tuberculosis3.png"));
+            //bola->ubicarMorty(300,700, 890, 460);//aquí va el morty->posiciones en equiz y lle, en los dos primeros parámetros
+
+            //tuberculosis->constructor(890, 460, tuberculosis->angTiro, 20, false, 30, 30, 1280, 722);
+            tuberculosis->jump();
+            tuberculosis->collide(boot);
+            tuberculosis->setPos(tuberculosis->coordX, tuberculosis->coordY);
+            tuberculosis->tiempo += 0.05;
+        }
+        tuberculosis->cambiarCara();
+    });
+    cronometro->start(500);
+
+
+
+
 }
 
 void MainWindow::animar(){
@@ -236,8 +307,6 @@ void MainWindow::collideM(){
         permitirmovy= true;
     }
 }
-
-
 
 // En el cpp de MainWindow
 void MainWindow::keyPressEvent(QKeyEvent *event) {
@@ -310,13 +379,15 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
             morty->contadorposicionmorty=0;
 
         }if(event->key()== Qt::Key_Space){
-            arma* laser= new arma();
-            //laser->ubicarMorty(300,700, 890, 460);//aquí va el morty->posiciones en equiz y lle, en los dos primeros parámetros
-            laser->setPixmap(QPixmap(":/img/laser.png"));
-            laser->constructor(morty->coordX+20, morty->coordY+10, 0, 20, false, 67, 10, 1280, 722);
-            laser->setPos(morty->coordX+80, morty->coordY+20);
-            scene->addItem(laser);
-            dispararlaser(laser);
+            if(morty->contadorposicionmorty==1){
+                arma* laser= new arma();
+                //laser->ubicarMorty(300,700, 890, 460);//aquí va el morty->posiciones en equiz y lle, en los dos primeros parámetros
+                laser->setPixmap(QPixmap(":/img/laser.png"));
+                laser->constructor(morty->coordX+20, morty->coordY+10, 0, 20, false, 67, 10, 1280, 722);
+                laser->setPos(morty->coordX+80, morty->coordY+20);
+                scene->addItem(laser);
+                dispararlaser(laser, laser->propio);
+            }
 
         }
     }
@@ -347,14 +418,10 @@ MainWindow::~MainWindow()
     delete JUGAR;
     delete nivel1;
     delete nivel2;
-    delete timerMorty;
     delete morty;
     delete tempo;
-    //delete morty->barraVida;
     delete hepatitisB;
     delete widgetContenedor;
-    delete tiempoTiro;
     delete particle;
 
 }
-

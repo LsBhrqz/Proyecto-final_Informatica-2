@@ -94,11 +94,6 @@ void modelo::collide(bool action){
 
         qDebug() << "angle " << angTiro;
 
-        //Condición para parar el rebote
-        if (qAbs(velY) < 2.2) {
-            velY = 0;
-            movimiento = false;
-        }
     }
 }
 
@@ -132,8 +127,150 @@ double modelo::getcoordY(){
     return coordY;
 }
 
-double modelo::angAleatorio(){
+void modelo::angAleatorio(){
     srand(time(NULL));
-    double num = 90 + rand()% (271 - 90);
-    return num;
+    angTiro = 180 + rand()% (360 - 180);
+
+}
+
+void modelo::colisionEnemigo(double posInX, double posInY, double anchoIn, double altoIn, double posDestX, double posDestY, double anchoDest, double altoDest){
+
+    int arreglo1[4]={posInX,posInY,anchoIn,altoIn};
+    int arreglo2[4]={posDestX,posDestY,anchoDest, altoDest};
+    int x=0,y=1, w=2,h=3;
+
+    int arreglomayorx[4];
+    //int arreglomayory[4];
+    //int arreglomenory[4];
+    int arreglomenorx[4];
+
+    if(arreglo1[x]<= arreglo2[x]){
+        for(int i=0; i<4;i++){
+            arreglomayorx[i]=arreglo2[i];
+            arreglomenorx[i]=arreglo1[i];
+        }
+    }else{
+        for(int i=0; i<4;i++){
+            arreglomayorx[i]=arreglo1[i];
+            arreglomenorx[i]=arreglo2[i];
+        }
+    }
+    /*
+    if(arreglo1[y]<= arreglo2[y]){
+        for(int i=0; i<4;i++){
+            arreglomayory[i]=arreglo2[i];
+            arreglomenory[i]=arreglo1[i];
+        }
+    }else{
+        for(int i=0; i<4;i++){
+            arreglomayory[i]=arreglo1[i];
+            arreglomenory[i]=arreglo2[i];
+        }
+    }
+
+*/
+    //verifico que estén dentro en la x
+    if((arreglomenorx[x]+arreglomenorx[w])>=arreglomayorx[x]){
+        colEnemigo=true;
+    }else{
+        colEnemigo=false;
+    }
+
+
+    /*
+    //Primero comparo si los arreglos son iguales en X
+    if(arreglo1[x]==arreglo2[x] && (arreglo1[x]+arreglo1[w] == arreglo2[x]+ arreglo2[w]) ){
+        //Ahora comparo si son iguales en y
+        if(arreglo1[y]==arreglo2[y] && (arreglo1[y]+arreglo1[h] == arreglo2[y]+ arreglo2[h])){
+            interseccion[x]= arreglo1[x];interseccion[y]= arreglo1[y];
+            interseccion[w]= arreglo1[w];interseccion[h]= arreglo1[h];
+            //Quiere decir que son exactamente el mismo
+            colEnemigo = true;
+        }
+    }else{
+        //En este caso puede que haya una parte dentro de otra o que no haya interseccion
+
+        //Comparo las x
+        if((arreglo1[x] >= arreglo2[x])){
+            //Determino la que está más a la derecha
+
+            //interseccion[x]=arreglo1[x];
+
+            //Verifico si la interseccion no existe
+            if((arreglo2[x] + arreglo2[w]) <= arreglo1[x]){
+
+                //Las x de una figura están dentro de la otra
+            }else if(arreglo1[x]+arreglo1[w] <= arreglo2[x]+arreglo2[w]){
+                interseccion[w]= arreglo1[x]+arreglo1[w]-interseccion[x];
+
+                //Una x está dentro de una figura
+            }else{
+                interseccion[w]=arreglo2[x]+arreglo2[w]-interseccion[x];
+            }
+
+        }else{
+
+            //Determino la que está más a la derecha
+            interseccion[x]=arreglo2[x];
+
+            //Verifico si la interseccion no existe
+            if((arreglo1[x]+ arreglo1[w])<= arreglo2[x]){
+
+                //Las x de una figura están dentro de la otra
+            }else if(arreglo2[x]+arreglo2[w] <= arreglo1[x]+arreglo1[w]){
+                interseccion[w]= arreglo2[x]+arreglo2[w]-interseccion[x];
+
+                //Una x está dentro de la figura
+            }else{
+                interseccion[w]=arreglo1[x]+arreglo1[w]-interseccion[x];
+            }
+        }
+
+        //Despues comparo las y
+        if((arreglo1[y] >= arreglo2[y])){
+
+            //Determino la y que está más abajo
+            interseccion[y]=arreglo2[y];
+
+            //Evaluo si no existe la intersecion
+            if((arreglo1[y] + arreglo1[h]) <= arreglo2[y]){
+
+                //Las y están dentro de la otra figura
+            }else if( (arreglo1[y] + arreglo1[h]) >= (arreglo2[y] + arreglo2[h]) ){
+                interseccion[h]= arreglo2[y] + arreglo2[h] - interseccion[y];
+
+                //Unas y están dentro de ula otra figura
+            }else{
+                interseccion[h]= arreglo1[y] + arreglo1[h] - interseccion[y];
+            }
+
+        }else{
+
+            //Determino la y que está más abajo
+            interseccion[y]=arreglo1[y];
+
+            //Evaluo si no existe la intersecion
+            if((arreglo2[y] + arreglo2[h]) <= arreglo1[y]){
+
+                //Las y están dentro de la otra figura
+            }else if( (arreglo2[y] + arreglo2[h]) >= (arreglo1[y] + arreglo1[h]) ){
+                interseccion[h]= arreglo1[y] + arreglo1[h] - interseccion[y];
+
+                //Unas y están dentro de ula otra figura
+            }else{
+                interseccion[h]= arreglo2[y] + arreglo2[h] - interseccion[y];
+            }
+        }
+    }
+    //arreglar condición
+    for(int i = 2; i<4; i++){
+        if(interseccion[i] == 0){
+            colEnemigo = false;
+        }
+        else{
+            colEnemigo = true;
+            break;
+        }
+
+    }*/
 }

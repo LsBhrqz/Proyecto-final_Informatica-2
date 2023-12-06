@@ -23,7 +23,7 @@ using namespace std;
 class modelo : public QObject, public QGraphicsPixmapItem{
 public:
     //QProgressBar *barraVida;
-    bool movimiento = true;
+    bool movimiento;
     double velInicial;
     double angTiro;
     double velX = 0;
@@ -40,6 +40,7 @@ public:
     double altoObj;
     double anchoPant;
     double altoPant;
+    bool colEnemigo;
 
     void constructor(double _xIn, double _yIn, double _angTiro, double _velInicial, bool _Grav, double _anchoObj, double _altoObj, double _anchoPant, double _altoPant);
 
@@ -63,7 +64,9 @@ public:
 
     double getcoordY();
 
-    double angAleatorio();
+    void colisionEnemigo(double posInX, double posInY, double anchoIn, double altoIn, double posDestX, double posDestY, double anchoDest, double altoDest);
+
+    void angAleatorio();
 };
 
 #endif // MODELO_H
